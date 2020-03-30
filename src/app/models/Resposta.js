@@ -7,13 +7,14 @@ class Resposta extends Model {
             descricao: DataTypes.STRING,
             pontuacao: DataTypes.INTEGER,
         }, {
-            sequelize: connection
+            sequelize: connection,
+            modelName: 'respostas'
         });
     }
 
-    static associations(models) {
+    static associate(models) {
         this.hasOne(models.Exercicios, { foreignKey: "resposta_id", as :"RespostaCerta" });
-    }
+    }   
     
 }
 

@@ -13,9 +13,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      response_id: {
-        /** */
-      },
       created_at : {
         type : Sequelize.DATE,
         allowNull: false,

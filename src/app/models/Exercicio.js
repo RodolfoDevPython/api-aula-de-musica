@@ -9,6 +9,10 @@ class Exercicios extends Model {
             sequelize: connection
         });
     }
+
+    /*static associations(models) {
+        this.belongsTo( models.Responsta );
+    }*/
 }
 
 module.exports = Exercicios;

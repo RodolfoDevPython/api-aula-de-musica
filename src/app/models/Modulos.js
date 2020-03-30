@@ -11,7 +11,7 @@ class Modulos extends Model {
     }
 
     static associate(models) {
-        this.belongsToMany(models);
+       // this.belongsToMany(models);
     }
 }
 

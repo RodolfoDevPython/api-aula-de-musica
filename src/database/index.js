@@ -13,6 +13,7 @@ Modulos.init(connection);
 Exercicios.init(connection);
 Respostas.init(connection);
 
-Modulos.associations(connection.models);
+Modulos.associate(connection.models);
+Respostas.associate(connection.models);
 
 module.exports = connection;
