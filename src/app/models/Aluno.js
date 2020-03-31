@@ -35,6 +35,12 @@ class Aluno extends Model {
             as: "modulos",
             foreignKey: "aluno_id" 
         });
+
+        this.belongsToMany( models.Exercicios, {
+            through: "historico_resposta",
+            as: "alunoExercicio",
+            foreignKey: "aluno_id"
+        });
         
     }
 

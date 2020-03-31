@@ -13,6 +13,12 @@ class Exercicios extends Model {
     static associate(models) {
         this.belongsTo(models.Respostas ,  { foreignKey: "resposta_id" , as: "RespostaCorreta" });
         this.belongsTo(models.Modulos, { foreignKey: "module_id", as: "exercicio_do_modulo" });
+
+        this.belongsToMany( models.Aluno, {
+            through: "historico_resposta",
+            as: "exercicioSetado",
+            foreignKey: "exercicio_id"
+        });
     }
 }
 
