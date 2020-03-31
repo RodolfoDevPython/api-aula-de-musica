@@ -1,5 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
-
+const bcrypt = require("bcrypt"); 
 
 class Aluno extends Model {
 
@@ -13,6 +13,7 @@ class Aluno extends Model {
             sequelize: connection,
             hooks: {
                 beforeSave: async aluno => {
+                    console.log(aluno.senha_hash)
                     if (aluno.senha_hash) {
                         aluno.senha = await bcrypt.hash(aluno.senha_hash, 8);
                     }
@@ -25,6 +26,16 @@ class Aluno extends Model {
            return bcrypt.compare(password, this.senha);
        }
 
+    }
+
+    static associate(models) {
+
+        this.belongsToMany( models.Modulos, { 
+            through: "alunos_modulos", 
+            as: "modulos",
+            foreignKey: "aluno_id" 
+        });
+        
     }
 
 }

@@ -4,15 +4,20 @@ const Resposta = require("../models/Resposta");
 module.exports = {
     async listagem(req, res){
 
+        const exercicios = await Exercicio.findAll({ include: { association: "RespostaCorreta" } });
+
+        return res.json(exercicios);
+
     },
     async inserir(req, res){
 
         const { descricao } = req.body;
 
-        const exercicio = await Exercicio.create({ descricao });
+        const [ exercicio, completed ] = await Exercicio.findOrCreate({ where: { descricao } });
 
-        if (!exercicio) return res.json("Problema ao inserir um exercicio");
+        if (!completed) return res.json({ message: "Exercicio já existe" });
 
         return res.json(exercicio);
+
     }
 }

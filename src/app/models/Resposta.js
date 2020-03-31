@@ -1,21 +1,20 @@
 const { Model, DataTypes } = require("sequelize");
 
-class Resposta extends Model {
+class Respostas extends Model {
 
     static init(connection) {
         super.init({
             descricao: DataTypes.STRING,
             pontuacao: DataTypes.INTEGER,
         }, {
-            sequelize: connection,
-            modelName: 'respostas'
+            sequelize: connection
         });
     }
 
     static associate(models) {
-        this.hasOne(models.Exercicios, { foreignKey: "resposta_id", as :"RespostaCerta" });
-    }   
+        this.hasOne(models.Exercicios, { foreignKey: "resposta_id", as : "RespostaCerta" });
+    }    
     
 }
 
-module.exports = Resposta;
+module.exports = Respostas;

@@ -13,7 +13,9 @@ Modulos.init(connection);
 Exercicios.init(connection);
 Respostas.init(connection);
 
+Aluno.associate(connection.models);
 Modulos.associate(connection.models);
+Exercicios.associate(connection.models);
 Respostas.associate(connection.models);
 
 module.exports = connection;

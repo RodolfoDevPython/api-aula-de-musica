@@ -11,7 +11,15 @@ class Modulos extends Model {
     }
 
     static associate(models) {
-       // this.belongsToMany(models);
+
+        this.belongsToMany( models.Aluno, { 
+            through: "alunos_modulos", 
+            as: "alunos",
+            foreignKey: "modulo_id"
+         });
+
+        this.hasMany(models.Exercicios, { as: "exercicio_do_modulo" });
+
     }
 }
 

@@ -13,6 +13,15 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      cargo_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'respostas', key: 'id'
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       created_at : {
         type : Sequelize.DATE,
         allowNull: false,

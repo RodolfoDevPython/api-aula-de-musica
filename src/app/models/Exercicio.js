@@ -10,9 +10,10 @@ class Exercicios extends Model {
         });
     }
 
-    /*static associations(models) {
-        this.belongsTo( models.Responsta );
-    }*/
+    static associate(models) {
+        this.belongsTo(models.Respostas ,  { foreignKey: "resposta_id" , as: "RespostaCorreta" });
+        this.belongsTo(models.Modulos, { foreignKey: "module_id", as: "exercicio_do_modulo" });
+    }
 }
 
 module.exports = Exercicios;

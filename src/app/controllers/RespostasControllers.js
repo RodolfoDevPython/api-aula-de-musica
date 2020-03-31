@@ -6,23 +6,29 @@ module.exports = {
     async inserir(req, res){
 
         const { descricao, pontuacao  } = req.body;
-        const { id } = req.params;
+        const { id = 0 } = req.params;
 
-        const resposta = await Resposta.create({ descricao, pontuacao });
-        const exercicio = await Exercicio.findByPk(id);
-
-        if (!resposta) return res.json("Problema ao inserir uma resposta");
+        const [ resposta, completed ] = await Resposta.findOrCreate({ descricao, pontuacao }, { where: { descricao, pontuacao } });
         
-        if(!resposta.setRespostaCerta(exercicio) ) return res.json("Problema ao Inserir uma resposta no  Exercicio");
+        if (!completed) return res.json({ message: "Problema ao inserir uma resposta" });
 
-        return res.json("Inserido uma resposta no  Exercicio");
+        if (id != 0) { 
+
+            const exercicio = await Exercicio.findByPk(id); 
+
+            if(!resposta.setRespostaCerta(exercicio) ) return res.json({ message: "Problema ao Inserir uma resposta no  Exercicio" });
+
+        }
+
+        return res.json(resposta);
 
     },
-    async listagem(req, res){
+    async listagem(req, res) {
 
-        const resp = Resposta.getRespostaCerta();
+        const resp = await Resposta.findAll();
 
         return res.json(resp);
 
     }
+
 }
