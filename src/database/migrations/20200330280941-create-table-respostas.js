@@ -17,6 +17,15 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      exercicio_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'exercicios', key: 'id'
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

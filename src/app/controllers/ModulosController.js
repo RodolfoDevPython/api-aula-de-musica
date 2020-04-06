@@ -1,4 +1,5 @@
 const Modulos = require("../models/Modulos");
+const Alunos = require("../models/Aluno");
 
 module.exports = {
 
@@ -20,5 +21,4 @@ module.exports = {
         return res.json({ message: "Modulo criado com sucesso!" , modulos });
 
     }
-
 }

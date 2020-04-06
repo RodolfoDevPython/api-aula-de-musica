@@ -13,11 +13,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      cargo_id: {
+      modulo_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'respostas', key: 'id'
+          model: 'modulos', key: 'id'
         },
         onUpdate: "CASCADE",
         onDelete: "CASCADE",

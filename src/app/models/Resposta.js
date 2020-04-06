@@ -12,7 +12,8 @@ class Respostas extends Model {
     }
 
     static associate(models) {
-        this.hasOne(models.Exercicios, { foreignKey: "resposta_id", as : "RespostaCerta" });
+        //this.hasOne(models.Exercicios, { foreignKey: "resposta_id", as : "RespostaCerta" });
+        this.belongsTo(models.Exercicios ,  { foreignKey: "exercicio_id" , as: "RespostaCorreta" });
     }    
     
 }

@@ -11,11 +11,19 @@ class Exercicios extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.Respostas ,  { foreignKey: "resposta_id" , as: "RespostaCorreta" });
-        this.belongsTo(models.Modulos, { foreignKey: "module_id", as: "exercicio_do_modulo" });
+
+        this.belongsTo( models.Modulos, { 
+            foreignKey: "modulo_id", 
+            as: "ExercicioDoModulo" 
+        });
+
+        this.hasOne( models.Respostas, { 
+                foreignKey: "exercicio_id", 
+                as : "RespostaCerta" 
+        });
 
         this.belongsToMany( models.Aluno, {
-            through: "historico_resposta",
+            through: "respostas_erradas",
             as: "exercicioSetado",
             foreignKey: "exercicio_id"
         });

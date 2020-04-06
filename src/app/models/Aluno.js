@@ -31,17 +31,22 @@ class Aluno extends Model {
     static associate(models) {
 
         this.belongsToMany( models.Modulos, { 
+            foreignKey: "aluno_id",
             through: "alunos_modulos", 
-            as: "modulos",
-            foreignKey: "aluno_id" 
+            as: "modulo",
+            
         });
 
         this.belongsToMany( models.Exercicios, {
-            through: "historico_resposta",
+            through: "respostas_erradas",
             as: "alunoExercicio",
             foreignKey: "aluno_id"
         });
         
+        this.hasOne( models.Ranking, {
+            foreignKey: "aluno_id",
+            as: "AlunoRanking"
+        })
     }
 
 }

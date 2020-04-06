@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('respostas_erradas', { 
+    return queryInterface.createTable('historicos', { 
       id: {
         type: Sequelize.INTEGER ,
         autoIncrement: true,
@@ -24,13 +24,23 @@ module.exports = {
         allowNull: false
       },
       resposta_errada: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
+      },
+      resposta_certa: {
+        type: Sequelize.STRING,
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updated_at: {
+        type: Sequelize.DATE,
         allowNull: false
       }
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('respostas_erradas');
+    return queryInterface.dropTable('historicos');
   }
 };
