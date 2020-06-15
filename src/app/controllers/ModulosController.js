@@ -12,13 +12,28 @@ module.exports = {
     },
     async inserir(req, res) {
 
-        const { nome } = req.body;
+        const { title, describe } = req.body;
 
-        const [ modulos, completed ] = await Modulos.findOrCreate({ where: { nome } });
+        const [ modulos, completed ] = await Modulos.findOrCreate({ where: { title, describe } });
 
         if (!completed) return res.json({ message: "já existe esse modulo" });
 
-        return res.json({ message: "Modulo criado com sucesso!" , modulos });
+        const modulo = await Modulos.findOne({ where: { title } });
+
+        return res.status(201).json({ message: "Modulo criado com sucesso!" , modulo });
+
+    },
+    async update(req, res) {
+       
+        const { title, describe } = req.body;
+
+        const { id } = req.params;
+
+        const [ number, modulos ] = await Modulos.update({ title, describe }, { where: { id } });
+
+        if (number == 0) return res.status(200).json({ message: "Can't uptade this module " });
+
+        return res.status(200).json({ message: `Module ${title} updated sucess` });
 
     }
 }

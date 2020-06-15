@@ -4,7 +4,8 @@ class Modulos extends Model {
 
     static init(connection){
         super.init({
-            nome: DataTypes.STRING
+            title: DataTypes.STRING,
+            describe: DataTypes.STRING
         }, {
             sequelize: connection
         });

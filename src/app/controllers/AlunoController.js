@@ -1,3 +1,5 @@
+const { Op } = require("sequelize");
+
 const Aluno = require("../models/Aluno");
 const Modulo = require("../models/Modulos");
 const Alternativas = require("../models/Alternativa");
@@ -55,7 +57,7 @@ module.exports = {
 
         const { id } = req.params;
 
-        const { nome } = req.body;
+        const { aluno_nome: nome } = req.body;
 
         const aluno = await Aluno.findOne({ where: { nome } });
 
@@ -68,6 +70,26 @@ module.exports = {
         return res.json({ aluno, modulo });
 
     },
+    async login(req, res){
+        
+        const { nome, senha } = req.body;
+
+        console.log(nome)
+        console.log(senha)
+
+        if (nome == undefined || senha == undefined) return res.json({ message: "Tem campos em vazio" })
+
+        const aluno = await Aluno.findOne({ where: { nome } });
+
+        if (!aluno) return res.status(200).json({ message: "Aluno não existe" });
+
+        const alunoChecado = await aluno.checkPassword(senha);
+
+        if (!alunoChecado) return res.status(200).json({ message: "Senha invalida tente novamente" });
+
+        return res.status(201).json({ message: `Seja bem-vindo ${nome}` });
+
+    },
     async alternativa_escolhida(req, res) {
 
         const { aluno_id, exercicio_id, resposta_id } = req.params;
@@ -76,11 +98,9 @@ module.exports = {
 
         //verificação se a resposta está certa de acordo com a descrição e exercicio_id
         const resp = await Respostas.findOne({ 
-            include: { association: 'RespostaCorreta' },
-            where: { descricao, exercicio_id }
+            include: { association: 'Exercicio' },
+            where: { descricao, exercicio_id, pontuacao: { [Op.ne]: 0 }  }
         });
-
-        const { pontuacao } = resp;
 
         if (resp == null) {
 
@@ -91,6 +111,8 @@ module.exports = {
 
         }
 
+        const { pontuacao } = resp;
+        
         //inserir na tebla de historico_respostas com flag de resposta_certa
         await Historico.create({ aluno_id, exercicio_id, resposta_certa: descricao });
 

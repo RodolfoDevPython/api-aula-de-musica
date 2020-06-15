@@ -20,6 +20,7 @@ module.exports = {
         
         const { descricao, pontuacao } = req.body;
 
+
         const [ resposta, completed ] = await Resposta.findOrCreate({ where: { descricao, pontuacao, exercicio_id } });
         
         if (!completed) return res.json({ message: "Problema ao inserir uma resposta" });
@@ -32,12 +33,24 @@ module.exports = {
 
         }*/
 
-        return res.json(resposta);
+        return res.status(201).json({ message: "Resposta Criada com Sucesso", resposta });
 
     },
     async listagem(req, res) {
 
-        const resp = await Resposta.findAll({ include: { association: 'RespostaCorreta' } });
+        const { exercicio_id = 0 } = req.params;
+
+        const options = {
+            page: 1, // Default 1
+            paginate: 5
+        }
+
+        const resp = await Resposta.paginate(
+                        { 
+                            options,
+                            include: { association: 'Exercicio' },
+                            where: { exercicio_id }
+                        });
 
         return res.json(resp);
 
@@ -54,5 +67,5 @@ module.exports = {
 
         return res.json({ message: "Resposta Atualizada com Sucesso" });
     }
-
+    
 }

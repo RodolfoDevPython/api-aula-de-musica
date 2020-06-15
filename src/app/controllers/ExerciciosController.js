@@ -2,10 +2,49 @@ const Exercicio = require("../models/Exercicio");
 const Resposta = require("../models/Resposta");
 
 module.exports = {
-    
+    async list_all(req, res) {
+
+        const { modulo_id } = req.params;
+        const { page = 1 } = req.query;
+
+        const options = {
+            page , // Default 1
+            paginate: 4,
+            attributes: ['id', 'descricao'],
+            where: { modulo_id },
+            include: [
+                { association: "ExercicioDoModulo" },
+                { 
+                    model : Resposta , 
+                    as : 'RespostaCerta' 
+                }
+
+            ]
+        }
+        
+        const exercicios = await Exercicio.paginate(options);
+
+
+        return res.json(exercicios);
+    },
     async listagem(req, res){
 
-        const exercicios = await Exercicio.findAll({ include: { association: "ExercicioDoModulo" }});
+        const { modulo_id = 0 } = req.query;
+
+        // console.log(id)
+
+        // if (id == 0 ) return res.json(await Exercicio.findAll() );
+
+        const exercicios = await Exercicio.findAll({ 
+                                    where: { modulo_id } ,
+                                    include: [
+                                        { association: "ExercicioDoModulo" },
+                                        { 
+                                            model : Resposta , 
+                                            as : 'RespostaCerta' 
+                                        }
+                                    ] 
+                                });
 
         return res.json(exercicios);
 
@@ -18,13 +57,13 @@ module.exports = {
         
         const findExercicio = await Exercicio.findOne({ where: { descricao, modulo_id } });
 
-        if (findExercicio) return res.json({ message: "Esse Exercicio já exite nesse Modulo" });
+        if (findExercicio) return res.status(200).json({ message: "Esse Exercicio já exite nesse Modulo" });
 
         const exercicio = await Exercicio.create({ descricao, modulo_id });
 
         if (!exercicio) return res.json({ message: "Exercicio já existe" });
 
-        return res.json(exercicio);
+        return res.status(201).json({ message: "Exercicio Criado coom Sucesso", exercicio });
 
     },
     async delete(req, res) {

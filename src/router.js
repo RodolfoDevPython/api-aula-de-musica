@@ -10,26 +10,30 @@ const Ranking = require("./app/controllers/RankingController");
 
 const router = express.Router();
 
-//pelo app
+//Pelo app
 router.post("/aluno", AlunoController.inserir);
-router.put("/aluno", AlunoController.inserir);
 router.get("/alunos", AlunoController.todosAlunos);
 router.post("/aluno/modulo/:id", AlunoController.choose_modulo);
 router.get("/aluno/:id/modulo/", AlunoController.modulosDoAluno);
 
+router.get("/modulo/:modulo_id/exercicios", ExercicioController.list_all)
+
+router.post("/aluno/login", AlunoController.login);
+
 //O CRUD É FEITO PELO DASHBOARD
 router.post("/modulo", ModuloController.inserir);
 router.get("/modulos", ModuloController.listagem);
+router.put("/modulo/:id", ModuloController.update);
 
 //O CRUD É FEITO PELO DASHBOARD
 router.post("/modulo/:modulo_id/exercicio" , ExercicioController.inserir);
-router.get("/exercicio" , ExercicioController.listagem);
+router.get("/exercicio/" , ExercicioController.listagem);
 router.delete("/modulo/:modulo_id/exercicio/:id", ExercicioController.delete);
 router.put("/modulo/:modulo_id/exercicio/:id", ExercicioController.update);
 
 //inserir a resposta no pelo dashboard
 router.post("/exercicio/:exercicio_id/resposta", RespostaController.inserir);
-router.get("/exercicio/resposta", RespostaController.listagem);
+router.get("/exercicio/:exercicio_id/alternativas", RespostaController.listagem);
 router.put("/exercicio/resposta/:id", RespostaController.update);
 
 router.post("/alternativas", Alternativas.inserir);

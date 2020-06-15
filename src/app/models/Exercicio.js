@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require("sequelize"); 
+const sequelizePaginate = require("sequelize-paginate");
 
 class Exercicios extends Model {
 
@@ -28,6 +29,10 @@ class Exercicios extends Model {
             foreignKey: "exercicio_id"
         });
     }
+
+    
 }
+
+sequelizePaginate.paginate(Exercicios)
 
 module.exports = Exercicios;
