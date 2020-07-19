@@ -111,6 +111,7 @@ module.exports = {
 
         }
 
+        //se existir a resposta pego a pontuação
         const { pontuacao } = resp;
         
         //inserir na tebla de historico_respostas com flag de resposta_certa
