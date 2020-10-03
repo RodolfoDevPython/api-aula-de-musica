@@ -79,12 +79,14 @@ module.exports = {
     },
     async update(req, res) {
 
-        const { id } = req.params;
+        const { modulo_id ,id } = req.params;
         const info = req.body;
 
-        await Exercicio.update( info, { where: { id } });
 
-        return res.json({ message: "Atualizado com Sucesso", exercicio });
+        console.log(info);
+        // await Exercicio.update( info, { where: { id, modulo_id } });
+
+        // return res.json({ message: "Atualizado com Sucesso", exercicio });
 
     }
 
