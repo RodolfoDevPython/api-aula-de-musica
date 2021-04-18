@@ -84,9 +84,9 @@ module.exports = {
 
 
         console.log(info);
-        // await Exercicio.update( info, { where: { id, modulo_id } });
+        await Exercicio.update( info, { where: { id, modulo_id } });
 
-        // return res.json({ message: "Atualizado com Sucesso", exercicio });
+        return res.json({ message: "Atualizado com Sucesso", exercicio });
 
     }
 
