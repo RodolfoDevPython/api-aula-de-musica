@@ -23,11 +23,13 @@ router.post("/aluno/login", AlunoController.login);
 //O CRUD É FEITO PELO DASHBOARD
 router.post("/modulo", ModuloController.inserir);
 router.get("/modulos", ModuloController.listagem);
+router.delete("/modulo/:id", ModuloController.delete);
 router.put("/modulo/:id", ModuloController.update);
+
 
 //O CRUD É FEITO PELO DASHBOARD
 router.post("/modulo/:modulo_id/exercicio" , ExercicioController.inserir);
-router.get("/exercicio/" , ExercicioController.listagem);
+router.get("/exercicios/:modulo_id" , ExercicioController.listagem);
 router.delete("/modulo/:modulo_id/exercicio/:id", ExercicioController.delete);
 router.put("/modulo/:modulo_id/exercicio/:id", ExercicioController.update);
 

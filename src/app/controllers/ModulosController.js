@@ -35,5 +35,21 @@ module.exports = {
 
         return res.status(200).json({ message: `Module ${title} updated sucess` });
 
+    },
+    async delete(req, res) {
+        const { id } = req.params;
+
+        try {
+
+            await Modulos.destroy({ where: { id } });    
+
+            return res.status(200).json({ message: "Module successfully deleted" })
+
+        } catch (error) {
+            return res.status(500).json({ message: "We were unable to delete the module", error })   
+        }
+
+        
+
     }
 }

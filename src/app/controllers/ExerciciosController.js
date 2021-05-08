@@ -29,24 +29,25 @@ module.exports = {
     },
     async listagem(req, res){
 
-        const { modulo_id = 0 } = req.query;
+        const { modulo_id } = req.params;
 
-        // console.log(id)
+        try {
+            const exercicios = await Exercicio.findAll({ 
+                where: { modulo_id } ,
+                include: [
+                    { association: "ExercicioDoModulo" },
+                    { 
+                        model : Resposta , 
+                        as : 'RespostaCerta' 
+                    }
+                ] 
+            });
 
-        // if (id == 0 ) return res.json(await Exercicio.findAll() );
-
-        const exercicios = await Exercicio.findAll({ 
-                                    where: { modulo_id } ,
-                                    include: [
-                                        { association: "ExercicioDoModulo" },
-                                        { 
-                                            model : Resposta , 
-                                            as : 'RespostaCerta' 
-                                        }
-                                    ] 
-                                });
-
-        return res.json(exercicios);
+            return res.json(exercicios);    
+        } catch (error) {
+            return res.status(500).json({ error })
+        }
+        
 
     },
     async inserir(req, res){
