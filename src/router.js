@@ -12,7 +12,78 @@ const router = express.Router();
 
 //Pelo app
 router.post("/aluno", AlunoController.inserir);
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Aluno:
+ *       type: object
+ *       required:
+ *         - nome
+ *         - senha_hash
+ *         - comum
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: The auto-generated id of the book
+ *         nome:
+ *           type: string
+ *           description: Nome do Aluno
+ *         senha_hash:
+ *           type: string
+ *           description: senha hash
+ *         comum:
+ *           type: string
+ *           description: Nome da comum congregação
+ *       example:
+ *         id: d5fE_asz
+ *         nome: rodolfo
+ *         senha_hash: 123445dvdsf
+ *         comum: Pq.Santana 2
+ */
+
+ /**
+  * @swagger
+  * tags:
+  *   name: Alunos
+  *   description: rotas de Alunos
+  */
+
+/**
+ * @swagger
+ * /alunos:
+ *   get:
+ *     summary: Returna uma lista de alunos
+ *     tags: [Alunos]
+ *     responses:
+ *       200:
+ *         description: Rota responsavel por listar os alunos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                  $ref: "#/components/schemas/Aluno"
+ */
 router.get("/alunos", AlunoController.todosAlunos);
+
+/**
+ * @swagger
+ * /alunos:
+ *   post:
+ *     summary: Inseri um modulo para o aluno
+ *     tags: [Alunos]
+ *     responses:
+ *       200:
+ *         description: Inserção do modulo escolhido pelo aluno
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: Object
+ *               items:
+ *                  $ref: "#/components/schemas/Aluno"
+ */
 router.post("/aluno/modulo/:id", AlunoController.choose_modulo);
 router.get("/aluno/:id/modulo/", AlunoController.modulosDoAluno);
 

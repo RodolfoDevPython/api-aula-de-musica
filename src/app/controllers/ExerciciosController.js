@@ -73,7 +73,7 @@ module.exports = {
 
         if (!await Exercicio.findByPk(id) ) return res.json({ message: "Esse Exercicio não existe" });
 
-        await Exercicio.destroy({ where: {id} });
+        await Exercicio.destroy({ where: { id } });
 
         return res.json({ message: "Excluido com Sucesso" });
 
