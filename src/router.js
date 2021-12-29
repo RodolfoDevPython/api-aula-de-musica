@@ -72,7 +72,7 @@ router.get("/alunos", AlunoController.todosAlunos);
  * @swagger
  * /alunos:
  *   post:
- *     summary: Inseri um modulo para o aluno
+ *     summary: Inserir um modulo para o aluno
  *     tags: [Alunos]
  *     responses:
  *       200:
@@ -80,8 +80,8 @@ router.get("/alunos", AlunoController.todosAlunos);
  *         content:
  *           application/json:
  *             schema:
- *               type: Object
- *               items:
+ *               type: object
+ *               item:
  *                  $ref: "#/components/schemas/Aluno"
  */
 router.post("/aluno/modulo/:id", AlunoController.choose_modulo);
@@ -112,6 +112,23 @@ router.put("/exercicio/resposta/:id", RespostaController.update);
 router.post("/alternativas", Alternativas.inserir);
 router.get("/alternativas", Alternativas.listagem);
 
+
+/**
+ * @swagger
+ * /alunos/:aluno_id/exercicios/:exercicio_id/resposta:
+ *   post:
+ *     summary: Inserir alternativa escolhida pelo aluno
+ *     tags: [Alunos]
+ *     responses:
+ *       200:
+ *         description: Inserção do modulo escolhido pelo aluno
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                  $ref: "#/components/schemas/Aluno"
+ */
 router.post("/aluno/:aluno_id/exercicios/:exercicio_id/resposta", AlunoController.alternativa_escolhida);
 
 router.get("/historico", Historico.listagem);

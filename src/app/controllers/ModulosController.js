@@ -49,7 +49,5 @@ module.exports = {
             return res.status(500).json({ message: "We were unable to delete the module", error })   
         }
 
-        
-
     }
 }

@@ -14,11 +14,11 @@ module.exports = {
 
         const findAluno = await Aluno.findOne({ where: { nome, comum } });
 
-        if (findAluno) return res.json({ message: "Esse usuario já existe" });
+        if (findAluno) return res.status(200).json({ message: "Esse usuario já existe" });
 
         const aluno = await Aluno.create({ nome, senha_hash, comum });
 
-        return res.json({ message: "Criado com Sucesso", aluno });
+        return res.status(201).json({ message: "Criado com Sucesso", aluno });
 
     },
     async todosAlunos(req, res) {
@@ -92,10 +92,11 @@ module.exports = {
     },
     async alternativa_escolhida(req, res) {
 
-        const { aluno_id, exercicio_id, resposta_id } = req.params;
+        const { aluno_id, exercicio_id } = req.params;
         
         const { descricao } = req.body;
 
+        if (descricao == "") return res.json({ message: "Não tem descrição" });
         //verificação se a resposta está certa de acordo com a descrição e exercicio_id
         const resp = await Respostas.findOne({ 
             include: { association: 'Exercicio' },

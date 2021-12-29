@@ -3,10 +3,10 @@ require("dotenv").config({
 });
 
 module.exports = {
-    host: process.env.DATABASE_URL_TESTE,
+    host: process.env.DATABASE_URL_TESTE || process.env.DATABASE_URL,
     database: "DB_TESTE",
     username: "root",
-    password: "41512330",
+    password: "41512330Louko",
     dialect: "mysql",
     define: {
         timestamps: true,

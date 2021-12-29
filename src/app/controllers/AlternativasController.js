@@ -10,7 +10,7 @@ module.exports = {
 
         if (!created) return res.json({ message: "Alternativa já existe" });
 
-        return res.json({ message: "Alternativa inserida co0m sucesso", alternativas })
+        return res.json({ message: "Alternativa inserida com sucesso", alternativas })
     },
 
     async listagem(req, res) {

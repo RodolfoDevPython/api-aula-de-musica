@@ -12,7 +12,7 @@ class Aluno extends Model {
         }, {
             sequelize: connection,
             hooks: {
-                beforeSave: async aluno => {
+                afterValidate: async (aluno) => {
                     console.log(aluno.senha_hash)
                     if (aluno.senha_hash) {
                         aluno.senha = await bcrypt.hash(aluno.senha_hash, 8);
