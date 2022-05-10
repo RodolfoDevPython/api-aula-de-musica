@@ -85,9 +85,11 @@ module.exports = {
 
         const alunoChecado = await aluno.checkPassword(senha);
 
+        const { id, comum } = aluno.dataValues;
+
         if (!alunoChecado) return res.status(200).json({ message: "Senha invalida tente novamente" });
 
-        return res.status(201).json({ message: `Seja bem-vindo ${nome}` });
+        return res.status(201).json({ message: `Seja bem-vindo ${nome}!!! 🥳 `, aluno: { id, nome, comum } });
 
     },
     async alternativa_escolhida(req, res) {
