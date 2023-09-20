@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+
+  app:
+    build:
+      context: ./app
+    container_name: app
+    entrypoint: "dockerize -wait tcp://db:3306 -timeout 20s docker-entrypoint.sh"
+    networks:
+      - node_network
+    volumes:
+      - ./app:/usr/src/app  
+    tty: true
+    ports:
+      - 3001:3001
+    depends_on:
+      - db #criar dependencia para subida de containers
+
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0 #comando que precisa ser rodando no boot do mysql
+    container_name: db
+    restart: always #se o service cair ele automaticamente restarta
+    tty: true  #serve para habilitar a interacao caso precise entrar dentro desse container
+    volumes:
+      - ./mysql:/var/lib/mysql #para não perder os dados do mysql caso o container seja destruido 
+    environment:
+      - MYSQL_DATABASE=bd_aula_de_musica
+      - MYSQL_ROOT_PASSWORD=41512330Louko
+    networks:
+      - node_network
+
+networks:
+  node_network:
+    driver: bridge
